@@ -34,5 +34,24 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/localizedFormat.js"></script>
+    <script type="text/javascript">
+
+     $(document).ready(function() {
+
+        dayjs.extend(window.dayjs_plugin_localizedFormat);
+        var today = dayjs().format("LL");
+        $("#currentDay").text(today);
+
+        var nowHour12 = dayjs().format("h");
+        var nowHour24 = dayjs().format("H");
+
+        for( var hour = 8; hour <=18; hour++){
+          var timeRow = $("<div class = 'row planner-row></div'");
+            
+        }
+      });
+    </script>  
   </body>
 </html>
