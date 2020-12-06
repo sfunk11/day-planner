@@ -28,8 +28,20 @@
       <p class="lead">A simple calendar app for scheduling your work day</p>
       <p id="currentDay" class="lead"></p>
     </header>
-    <div class="container">
-      <!-- Timeblocks go here -->
+    <div class="container" id = "time-block">
+      <table class="table">
+        <thead>
+          <tr>
+            <!-- The scope attribute specifies that this is a header for a column -->
+            <th scope="col" class = "col-2-md">Time</th>
+            <th scope="col" class = "col-9-md">Itinerary</th>
+            <th scope="col" class = "col-1-md">Save</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -47,9 +59,23 @@
         var nowHour12 = dayjs().format("h");
         var nowHour24 = dayjs().format("H");
 
-        for( var hour = 8; hour <=18; hour++){
-          var timeRow = $("<div class = 'row planner-row></div'");
-            
+        for(var hour = 8; hour <18; hour++){
+          var fomattedHour = 0;
+          var ampm = "";
+          if (hour < 13){
+            formattedHour = hour;
+            ampm = "AM";
+          }else{ 
+            formattedHour = hour - 12;
+            ampm = "PM";
+          }
+
+          var tableRow = $("<tr>");
+          var hourColumn = $("<td>").text(formattedHour+ampm);
+          var plans = $("<td>").text("TBD");
+          var save = $("<td>");
+          tableRow.append(hourColumn,plans,save);
+          $("tbody").append(tableRow);
         }
       });
     </script>  
