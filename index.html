@@ -51,14 +51,15 @@
     <script type="text/javascript">
 
      $(document).ready(function() {
+    
+      // get stored data
       var storedPlans = JSON.parse(localStorage.getItem("storedPlans"));
-
-  if (storedPlans !== null) {
-     var planTextArr = storedPlans;
-  } else {
+        if (storedPlans !== null) {
+          var planTextArr = storedPlans;
+  }     else {
     // this should only occur on first time the app is loaded in the browser
     // helpfully remind user that lunch is important
-     var planTextArr = ["","","","","Remenber to take a lunch break!","","","","",""];
+          var planTextArr = ["","","","","Remember to take a lunch break!","","","","",""];
   }
 
         dayjs.extend(window.dayjs_plugin_localizedFormat);
@@ -68,7 +69,7 @@
         var nowHour12 = dayjs().format("h");
         var nowHour24 = dayjs().format("H");
 
-        // create the calendar table with rows.
+        // format the time for the first column
         for(var hour = 8; hour <18; hour++){
           var index = hour - 8;
 
@@ -84,24 +85,33 @@
             formattedHour = hour;
             ampm = "AM";
           }
-      
+      // create the calendar table with rows.
           var tableRow = $("<tr>");
           var hourColumn = $("<td>").text(formattedHour+ampm);
           var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
-          var save = $("<td>").html("<button></button>");
-            save.attr("id", "save-${index}");
-            save.addClass("save button btn-primary");
+          var saveTemplate = "<td><button class = 'save btn-primary button'id = '%idx'>Save</button></td>";
+            saveTemplate = saveTemplate.replace('%idx', index);
+            save = $(saveTemplate);
           tableRow.append(hourColumn,plans,save);
           $("tbody").append(tableRow);
         }
 // populate any saved plans.
+      function renderPlans(planTextArray){  
         for(var index = 0; index < planTextArr.length; index++){
           var elementID = `#input-${index}`;
           $(elementID).val(planTextArr[index]);
-          console.log(planTextArr[index]);
-        }
+        }}
+ // Save the input to the array when save button is clicked
+$(".save").click(function(event){
+  var rowClicked = event.target.id;
+  var textElementId = "#" + rowClicked;
+  planTextArr[rowClicked] = $(textElementId).val();
+  renderPlans(planTextArr);
+  localStorage.setItem("storedPlans",planTextArr);
+})
+
       });
     </script>  
   </body>
