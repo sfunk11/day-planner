@@ -54,8 +54,10 @@
     
       // get stored data
       var storedPlans = JSON.parse(localStorage.getItem("storedPlans"));
+ ;
         if (storedPlans !== null) {
           var planTextArr = storedPlans;
+          console.log(storedPlans);
   }     else {
     // this should only occur on first time the app is loaded in the browser
     // helpfully remind user that lunch is important
@@ -106,10 +108,10 @@
  // Save the input to the array when save button is clicked
 $(".save").click(function(event){
   var rowClicked = event.target.id;
-  var textElementId = "#" + rowClicked;
+  var textElementId = `#input-${rowClicked}`;
   planTextArr[rowClicked] = $(textElementId).val();
   renderPlans(planTextArr);
-  localStorage.setItem("storedPlans",planTextArr);
+  localStorage.setItem("storedPlans",JSON.stringify(planTextArr));
 })
 
       });
