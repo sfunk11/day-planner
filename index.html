@@ -87,18 +87,20 @@
           var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
+            console.log(plans);
           var save = $("<td>").html("<button></button>");
-            save.attr("id", "save-$(index)");
+            save.attr("id", "save-${index}");
             save.addClass("save button btn-primary");
           tableRow.append(hourColumn,plans,save);
           $("tbody").append(tableRow);
         }
 // populate any saved plans.
         for(var index = 0; index < planTextArr.length; index++){
-          var elementIDtemplate=  "#Input-%index";
-        var elementID = elementIDtemplate.replace("%index",index);
+          var elementID = `Index-${index}`;
+        
         console.log(elementID);
-          $(elementID).text(planTextArr[index]);
+          $(elementID).val(planTextArr[index]);
+          console.log(planTextArr[index]);
         }
       });
     </script>  
