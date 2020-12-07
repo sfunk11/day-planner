@@ -31,15 +31,15 @@
     <div class="container" id = "time-block">
       <table class="table">
         <thead>
-          <tr>
+          <tr class = row>
             <!-- The scope attribute specifies that this is a header for a column -->
             <th scope="col" class = "col-2-md">Time</th>
-            <th scope="col" class = "col-9-md">Itinerary</th>
-            <th scope="col" class = "col-1-md">Save</th>
+            <th scope="col" class = "col-9-md">Activity</th>
+            <th scope="col" class = "col-1-md"></th>
           </tr>
         </thead>
         <tbody>
-          
+       
         </tbody>
       </table>
     </div>
@@ -51,6 +51,15 @@
     <script type="text/javascript">
 
      $(document).ready(function() {
+      var storedPlans = JSON.parse(localStorage.getItem("storedPlans"));
+
+  if (storedPlans !== null) {
+     var planTextArr = storedPlans;
+  } else {
+    // this should only occur on first time the app is loaded in the browser
+    // helpfully remind user that lunch is important
+     var planTextArr = ["1","2","3","4","Remenber to take a lunch break!","6","7","8","9","10"];
+  }
 
         dayjs.extend(window.dayjs_plugin_localizedFormat);
         var today = dayjs().format("LL");
@@ -59,29 +68,37 @@
         var nowHour12 = dayjs().format("h");
         var nowHour24 = dayjs().format("H");
 
+        // create the calendar table with rows.
         for(var hour = 8; hour <18; hour++){
           var index = hour - 8;
 
           var fomattedHour = 0;
           var ampm = "";
-          if (hour < 13){
-            formattedHour = hour;
-            ampm = "AM";
-          }else{ 
+          if (hour > 12){
             formattedHour = hour - 12;
             ampm = "PM";
+          }else{ 
+            formattedHour = hour;
+            ampm = "AM";
           }
-
+      
           var tableRow = $("<tr>");
           var hourColumn = $("<td>").text(formattedHour+ampm);
-          var plans = $("<td>").html("<textarea></textarea>");
-            plans.addClass("dailyPlanner");
-            plans.attr("id", "input-$(index)");
+          var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
+            planTemplate = planTemplate.replace('%idx', index);
+            plans = $(planTemplate);
           var save = $("<td>").html("<button></button>");
             save.attr("id", "save-$(index)");
-            save.addClass("save btn-primary");
+            save.addClass("save button btn-primary");
           tableRow.append(hourColumn,plans,save);
           $("tbody").append(tableRow);
+        }
+// populate any saved plans.
+        for(var index = 0; index < planTextArr.length; index++){
+          var elementIDtemplate=  "#Input-%index";
+        var elementID = elementIDtemplate.replace("%index",index);
+        console.log(elementID);
+          $(elementID).text(planTextArr[index]);
         }
       });
     </script>  
