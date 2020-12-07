@@ -58,7 +58,7 @@
   } else {
     // this should only occur on first time the app is loaded in the browser
     // helpfully remind user that lunch is important
-     var planTextArr = ["1","2","3","4","Remenber to take a lunch break!","6","7","8","9","10"];
+     var planTextArr = ["","","","","Remenber to take a lunch break!","","","","",""];
   }
 
         dayjs.extend(window.dayjs_plugin_localizedFormat);
@@ -77,6 +77,9 @@
           if (hour > 12){
             formattedHour = hour - 12;
             ampm = "PM";
+          }else if(hour === 12){
+            formattedHour = hour;
+            ampm = "PM";
           }else{ 
             formattedHour = hour;
             ampm = "AM";
@@ -87,7 +90,6 @@
           var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
-            console.log(plans);
           var save = $("<td>").html("<button></button>");
             save.attr("id", "save-${index}");
             save.addClass("save button btn-primary");
@@ -96,9 +98,7 @@
         }
 // populate any saved plans.
         for(var index = 0; index < planTextArr.length; index++){
-          var elementID = `input-${index}`;
-        
-        console.log(elementID);
+          var elementID = `#input-${index}`;
           $(elementID).val(planTextArr[index]);
           console.log(planTextArr[index]);
         }
