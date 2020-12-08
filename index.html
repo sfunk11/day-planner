@@ -29,13 +29,13 @@
       <p id="currentDay" class="lead"></p>
     </header>
     <div class="container" class = "time-block">
-      <table class="table time-block">
+      <table class="table container time-block">
         <thead>
-          <tr class = "row">
+          <tr>
             <!-- The scope attribute specifies that this is a header for a column -->
-            <th scope="col" class = "col-2-md">Time</th>
-            <th scope="col" class = "col-9-md">Activity</th>
-            <th scope="col" class = "col-1-md">Save</th>
+            <th scope="col">Time</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Save</th>
           </tr>
         </thead>
         <tbody>
@@ -86,17 +86,17 @@
             ampm = "AM";
           }
       // create the calendar table with rows.
-          var tableRow = $("<tr>").addClass("row");
+          var tableRow = $("<tr>")  //.addClass("row");
           var hourColumn = $("<td>").text(formattedHour+ampm);
-            hourColumn.attr("class", "hour col-2-md")
+            // hourColumn.attr("class", "hour col-2-md")
           var planTemplate = "<td><textarea class = 'dailyPlanner description'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
-            plans.addClass("col-9-md")
+            // plans.addClass("col-9-md")
           var saveTemplate = "<td><button class = 'saveBtn btn'id = '%idx'><i class='fas fa-save'></i></button></td>";
             saveTemplate = saveTemplate.replace('%idx', index);
             save = $(saveTemplate);
-            save.addClass("col-1-md")
+            // save.addClass("col-1-md")
           tableRow.append(hourColumn,plans,save);
           setBackgroundColor(tableRow,hour);
           $("tbody").append(tableRow);
