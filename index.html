@@ -24,18 +24,18 @@
 
   <body>
     <header class="jumbotron">
-      <h1 class="display-3">Work Day Scheduler</h1>
-      <p class="lead">A simple calendar app for scheduling your work day</p>
+      <h1 class="display-3">Sam's Day Planner</h1>
+      <p class="lead">A simple calendar app for planning out your work day</p>
       <p id="currentDay" class="lead"></p>
     </header>
-    <div class="container" id = "time-block">
-      <table class="table">
+    <div class="container" class = "time-block">
+      <table class="table time-block">
         <thead>
-          <tr class = row>
+          <tr class = "row">
             <!-- The scope attribute specifies that this is a header for a column -->
             <th scope="col" class = "col-2-md">Time</th>
             <th scope="col" class = "col-9-md">Activity</th>
-            <th scope="col" class = "col-1-md"></th>
+            <th scope="col" class = "col-1-md">Save</th>
           </tr>
         </thead>
         <tbody>
@@ -86,16 +86,19 @@
             ampm = "AM";
           }
       // create the calendar table with rows.
-          var tableRow = $("<tr>");
+          var tableRow = $("<tr>").addClass("row");
           var hourColumn = $("<td>").text(formattedHour+ampm);
-            hourColumn.attr("class", "hour")
-          var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
+            hourColumn.attr("class", "hour col-2-md")
+          var planTemplate = "<td><textarea class = 'dailyPlanner description'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
-          var saveTemplate = "<td><button class = 'save btn-primary button'id = '%idx'>Save</button></td>";
+            plans.addClass("col-9-md")
+          var saveTemplate = "<td><button type = 'submit' class = 'saveBtn btn'id = '%idx'><i class='fas fa-save'></i></button></td>";
             saveTemplate = saveTemplate.replace('%idx', index);
             save = $(saveTemplate);
+            save.addClass("col-1-md")
           tableRow.append(hourColumn,plans,save);
+          setBackgroundColor(tableRow,hour);
           $("tbody").append(tableRow);
         }
 // populate any saved plans.
@@ -105,9 +108,19 @@
           $(elementID).val(planTextArr[index]);
         }}
 // change the color of events for past, present, future
+function setBackgroundColor(tableRow,hour){
+  if(hour < nowHour24){
+    tableRow.addClass("past").removeClass("present future");
+  } else if (hour > nowHour24){
+    tableRow.addClass("future").removeClass("past present");
+  }else {
+    tableRow.addClass("present").removeClass("past future");
+  }
+}
 
  // Save the input to the array when save button is clicked
-$(".save").click(function(event){
+$(".saveBtn").click(function(event){
+  event.preventDefault(); 
   var rowClicked = event.target.id;
   var textElementId = `#input-${rowClicked}`;
   planTextArr[rowClicked] = $(textElementId).val();
