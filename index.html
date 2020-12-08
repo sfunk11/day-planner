@@ -105,8 +105,9 @@
       function renderPlans(planTextArray){  
         for(var index = 0; index < planTextArr.length; index++){
           var elementID = `#input-${index}`;
+          console.log(elementID);
           $(elementID).val(planTextArr[index]);
-        }}
+        }};
 // change the color of events for past, present, future
 function setBackgroundColor(tableRow,hour){
   if(hour < nowHour24){
@@ -115,18 +116,19 @@ function setBackgroundColor(tableRow,hour){
     tableRow.addClass("future").removeClass("past present");
   }else {
     tableRow.addClass("present").removeClass("past future");
-  }
-}
+  };
+};
 
  // Save the input to the array when save button is clicked
 $(".saveBtn").click(function(event){
   event.preventDefault(); 
   var rowClicked = event.target.id;
   var textElementId = `#input-${rowClicked}`;
+  console.log(textElementId);
   planTextArr[rowClicked] = $(textElementId).val();
   renderPlans(planTextArr);
   localStorage.setItem("storedPlans",JSON.stringify(planTextArr));
-})
+});
 renderPlans(planTextArr);
       });
     </script>  
