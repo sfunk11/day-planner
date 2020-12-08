@@ -53,16 +53,14 @@
      $(document).ready(function() {
     
       // get stored data
-      var storedPlans = JSON.parse(localStorage.getItem("storedPlans"));
- ;
-        if (storedPlans !== null) {
-          var planTextArr = storedPlans;
-          console.log(storedPlans);
+      var planTextArr = JSON.parse(localStorage.getItem("storedPlans"));
+        if (planTextArr) {
+          console.log(planTextArr);
   }     else {
     // this should only occur on first time the app is loaded in the browser
     // helpfully remind user that lunch is important
           var planTextArr = ["","","","","Remember to take a lunch break!","","","","",""];
-  }
+  };
 
         dayjs.extend(window.dayjs_plugin_localizedFormat);
         var today = dayjs().format("LL");
@@ -90,6 +88,7 @@
       // create the calendar table with rows.
           var tableRow = $("<tr>");
           var hourColumn = $("<td>").text(formattedHour+ampm);
+            hourColumn.attr("class", "hour")
           var planTemplate = "<td><textarea class = 'dailyPlanner'id = 'input-%idx'></textarea> </td>";
             planTemplate = planTemplate.replace('%idx', index);
             plans = $(planTemplate);
@@ -105,6 +104,8 @@
           var elementID = `#input-${index}`;
           $(elementID).val(planTextArr[index]);
         }}
+// change the color of events for past, present, future
+
  // Save the input to the array when save button is clicked
 $(".save").click(function(event){
   var rowClicked = event.target.id;
@@ -113,7 +114,7 @@ $(".save").click(function(event){
   renderPlans(planTextArr);
   localStorage.setItem("storedPlans",JSON.stringify(planTextArr));
 })
-
+renderPlans(planTextArr);
       });
     </script>  
   </body>
