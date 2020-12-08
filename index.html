@@ -105,7 +105,6 @@
       function renderPlans(planTextArray){  
         for(var index = 0; index < planTextArr.length; index++){
           var elementID = `#input-${index}`;
-          console.log(elementID);
           $(elementID).val(planTextArr[index]);
         }};
 // change the color of events for past, present, future
@@ -121,8 +120,8 @@ function setBackgroundColor(tableRow,hour){
 
  // Save the input to the array when save button is clicked
 $(".saveBtn").click(function(event){
-  event.preventDefault(); 
-  var rowClicked = event.target.id;
+  var rowClicked = $(this).attr("id");
+  console.log($(this).attr("id"));
   var textElementId = `#input-${rowClicked}`;
   console.log(textElementId);
   planTextArr[rowClicked] = $(textElementId).val();
